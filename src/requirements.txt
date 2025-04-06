@@ -1,0 +1,4 @@
+requests==2.32.3
+RPi.GPIO==0.7.1
+gtts==2.2.4
+python-dotenv==1.0.0
