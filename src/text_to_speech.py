@@ -1,11 +1,29 @@
 import logging
 import os
+import platform
 import sys
 
 from gtts import gTTS
 
 
+def get_audio_player(format="wav"):
+    logging.info("Looking up OS audio player..")
+    """Returns the appropriate audio player command based on the operating system.
+    """
+    system = platform.system().lower()
+    if system == 'darwin':  # macOS
+        return 'afplay'
+    elif system == 'linux':
+        if format == "wav":
+            return 'aplay'
+        else:
+            return 'mpg123'
+    else:
+        raise OSError(f"Unsupported operating system: {system}")
+
+
 def say_this_text(text):
+    logging.info("Converting text to speech..")
     """Convert text to speech and play it"""
     try:
         # Create a temporary file for the audio
@@ -16,7 +34,9 @@ def say_this_text(text):
         tts.save(audio_file)
         
         # Play the audio file
-        os.system(f"mpg123 {audio_file}")
+        logging.info("Playing audio file..")
+        audio_player = get_audio_player()
+        os.system(f"{audio_player} {audio_file}")
         
         # Clean up the temporary file
         os.remove(audio_file)

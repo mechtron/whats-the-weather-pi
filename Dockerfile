@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     python3-gpiozero \
     python3-gtts \
+    python3-gtts-token \
     raspi-gpio \
     mpg123 \
     && rm -rf /var/lib/apt/lists/*

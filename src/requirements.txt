@@ -1,3 +1,5 @@
+gpiozero==2.0.1
+lgpio==0.2.2.0
 requests==2.32.3
 RPi.GPIO==0.7.1
 gtts==2.2.4
