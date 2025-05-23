@@ -2,13 +2,6 @@ import requests
 import time
 import datetime
 import os
-from pathlib import Path
-
-from dotenv import load_dotenv
-
-
-file_dir = Path(__file__).parent
-load_dotenv(file_dir / '.env')
 
 
 WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")

@@ -4,7 +4,9 @@ import datetime
 import time
 import logging
 import os
+from pathlib import Path
 
+from dotenv import load_dotenv
 from gpiozero import (
     Button,
     PWMLED,
@@ -13,6 +15,10 @@ from signal import pause
 
 from text_to_speech import say_this_text
 from weather import get_todays_weather
+
+
+file_dir = Path(__file__).parent
+load_dotenv(file_dir / '.env')
 
 
 button = Button(12, pull_up=True)   # blue
