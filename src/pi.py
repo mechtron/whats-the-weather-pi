@@ -15,14 +15,14 @@ from text_to_speech import say_this_text
 from weather import get_todays_weather
 
 
-button = Button(12, pull_up=True) # blue
-button_led_red = PWMLED(16) # purple
-button_led_green = PWMLED(20) # grey
-button_led_blue = PWMLED(21) # white
+button = Button(12, pull_up=True)   # blue
+button_led_red = PWMLED(16)         # purple
+button_led_green = PWMLED(20)       # grey
+button_led_blue = PWMLED(21)        # white
 
 
 def button_leds_off():
-    # Note: button LEDs are active low, .on() means LEDs off
+    # Button LEDs are active low, .on() means LEDs off
     button_led_red.on()
     button_led_green.on()
     button_led_blue.on()
@@ -34,22 +34,49 @@ def button_leds_pink():
     button_led_blue.value = 0.7    # 30% blue
 
 
+import requests
+import time
+import datetime
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+file_dir = Path(__file__).parent
+load_dotenv(file_dir / '.env')
+
+
+def get_time_of_day():
+    """Returns 'morning', 'afternoon', or 'evening' based on the current hour.
+    
+    Morning: 5:00 AM - 11:59 AM
+    Afternoon: 12:00 PM - 4:59 PM
+    Evening: 5:00 PM - 4:59 AM
+    """
+    current_hour = datetime.datetime.now().hour
+    
+    if 5 <= current_hour < 12:
+        return "morning"
+    elif 12 <= current_hour < 17:
+        return "afternoon"
+    else:
+        return "evening"
+
+
 def button_push():
     logging.info("Maeve pushed the button")
     button_leds_pink()
-    # todays_weather = get_todays_weather()
-    # say_this_text(
-    #     f"""
-    #     Hi Maeve, how are you today? 
-    #     The weather today is {todays_weather['cloud_cover']} 
-    #     with a high of {todays_weather['high']} 
-    #     and a low of {todays_weather['low']}.
-    #     I love you so much. I am so proud of you. 
-    #     You are so smart and talented. 
-    #     You are perfect just the way you are.
-    #     Love, Daddy.
-    #     """
-    # )
+    time_of_day = get_time_of_day()
+    todays_weather = get_todays_weather()
+    say_this_text(
+        f"""
+        Good {time_of_day} Maeve!
+        The weather today is {todays_weather['condition']['text']} and the 
+        temperature is {todays_weather['feelslike_f']} degrees Fahrenheit.
+        I love you so much. I am so proud of you. You are so cute and talented,
+        and you are perfect just the way you are. Love, Daddy.
+        """
+    )
 
 
 def button_release():
