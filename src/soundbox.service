@@ -1,0 +1,13 @@
+[Unit]
+Description=Soundbox Script
+After=network.target
+
+[Service]
+ExecStart=/home/YOUR_USERNAME/soundbox/venv/bin/python /home/YOUR_USERNAME/soundbox/pi.py
+WorkingDirectory=/home/YOUR_USERNAME/soundbox
+Restart=on-failure
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
