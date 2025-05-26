@@ -2,12 +2,22 @@ import base64
 import logging
 import mimetypes
 import os
+from pathlib import Path
 import platform
 import re
 import struct
 
+from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+
+
+file_dir = Path(__file__).parent
+load_dotenv(file_dir / '.env')
+
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+if not GOOGLE_API_KEY:
+    raise ValueError("GOOGLE_API_KEY environment variable is not set")
 
 
 def get_wav_audio_player():
