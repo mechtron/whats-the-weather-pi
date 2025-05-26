@@ -12,16 +12,6 @@ This program:
 1. Cache pre-generated messages
 
 ## Hardware requirements:
-- Raspberry Pi Zero 2 (or better)
-- Button connected to GPIO 12
-- Speaker connected to audio output
-
-## Running on Raspberry Pi
-
-### Hardware setup
-
-#### BOM
-
 1. [Raspberry Pi Zero 2 WH](https://www.adafruit.com/product/6008)
 1. [Mini External USB Stereo Speaker](https://www.adafruit.com/product/3369)
 1. [Micro USB to USB OTG Cable](https://www.amazon.com/dp/B00N9S9Z0G)
@@ -29,7 +19,9 @@ This program:
     - [Datasheet](https://cdn-shop.adafruit.com/product-files/3350/Datasheet+.pdf)
 1. [5V 2.5A Switching Power Supply with 20AWG MicroUSB Cable](https://www.adafruit.com/product/1995)
 
-#### Setup
+## Running on Raspberry Pi
+
+### Hardware setup
 
 1. Use Raspberry Pi Imager to flash your Pi's SD card with Raspberry Pi OS
 1. Wire up the RGB pushbutton switch to your Pi
