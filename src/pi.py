@@ -14,10 +14,10 @@ from text_to_speech import say_this_text
 from weather import get_todays_weather
 
 
-button = Button(12, pull_up=True)   # blue
-button_led_red = PWMLED(16)         # purple
-button_led_green = PWMLED(20)       # grey
-button_led_blue = PWMLED(21)        # white
+button = Button(12, pull_up=True)   # blue wire
+button_led_red = PWMLED(16)         # purple wire
+button_led_green = PWMLED(20)       # grey wire
+button_led_blue = PWMLED(21)        # white wire
 
 
 def button_leds_off():
