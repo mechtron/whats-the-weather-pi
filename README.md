@@ -37,6 +37,7 @@ This program:
 1. SSH into your Raspberry Pi: `ssh username@soundbox.local`, where `username` is the user you inputted during setup and `soundbox.local` is your Pi's hostname/IP.
 1. Create a new folder `~/soundbox`: `mkdir ~/soundbox` and change directories to it: `cd ~/soundbox`
 1. Copy the contents of `./src` to your Raspberry Pi: `scp *.* .env username@soundbox.local:/home/username/soundbox`
+1. Rename `.env.example` to `.env` and add your Gemini and WeatherAPI.com API keys: `mv .env.example .env`
 1. Create a Python virtual environment and activate it: `python3 -m venv venv && source venv/bin/activate`
 1. Install Python dependencies: `pip install -r requirements.txt`
 1. Set the speaker volume: run `alsamixer` to setup volume (25% is a good starting spot), hit ESC to exit
