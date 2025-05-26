@@ -35,10 +35,10 @@ def get_wav_audio_player():
 
 
 def save_binary_file(file_name, data):
+    logging.info(f"Saving file to {file_name}..")
     f = open(file_name, "wb")
     f.write(data)
     f.close()
-    logging.info(f"File saved to to: {file_name}")
 
 
 def parse_audio_mime_type(mime_type: str) -> dict[str, int | None]:
@@ -86,6 +86,7 @@ def convert_to_wav(audio_data: bytes, mime_type: str) -> bytes:
     Returns:
         A bytes object representing the WAV file header.
     """
+    logging.info("Converting to WAV file..")
     parameters = parse_audio_mime_type(mime_type)
     bits_per_sample = parameters["bits_per_sample"]
     sample_rate = parameters["rate"]
@@ -118,6 +119,7 @@ def convert_to_wav(audio_data: bytes, mime_type: str) -> bytes:
 
 
 def generate(text, audio_file_path):
+    logging.info("Generating text to speech using Gemini..")
     client = genai.Client(
         api_key=os.environ.get("GEMINI_API_KEY"),
     )
@@ -170,8 +172,6 @@ def generate(text, audio_file_path):
 
 
 def say_this_text(text):
-    logging.info("Converting text to speech using Gemini..")
-    
     audio_file_path = "/tmp/greeting.wav"
     generate(text, audio_file_path)
     

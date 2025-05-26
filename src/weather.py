@@ -36,6 +36,7 @@ def get_time_of_day():
 
 def get_todays_weather():
     """Fetch current weather data from WeatherAPI.com"""
+    logging.info("Looking up today's weather..")
     try:
         url = f"http://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={LOCATION}"
         response = requests.get(url)
