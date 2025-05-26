@@ -14,23 +14,22 @@ from text_to_speech import say_this_text
 from weather import get_todays_weather
 
 
-button = Button(12, pull_up=True)   # blue wire
-button_led_red = PWMLED(16)         # purple wire
-button_led_green = PWMLED(20)       # grey wire
-button_led_blue = PWMLED(21)        # white wire
+button = Button(12, pull_up=True)                   # blue wire
+button_led_red = PWMLED(16, active_high=False)      # purple wire
+button_led_green = PWMLED(20, active_high=False)    # grey wire
+button_led_blue = PWMLED(21, active_high=False)     # white wire
 
 
 def button_leds_off():
-    # Button LEDs are active low, .on() means LEDs off
-    button_led_red.on()
-    button_led_green.on()
-    button_led_blue.on()
+    button_led_red.off()
+    button_led_green.off()
+    button_led_blue.off()
 
 
 def button_leds_pink():
-    button_led_red.value = 0.0     # 100% red
-    button_led_green.value = 1.0   # 0% green
-    button_led_blue.value = 0.7    # 30% blue
+    button_led_red.value = 1.0     # 100% red
+    button_led_green.value = 0.0   # 0% green
+    button_led_blue.value = 0.3    # 30% blue
 
 
 def get_time_of_day():
@@ -76,10 +75,8 @@ def button_release():
 
 def setup():
     logging.basicConfig(level=logging.INFO)
-    '''Setup button'''
     button.when_pressed = button_push
     button.when_released = button_release
-    '''Setup button LEDs'''
     button_leds_off()
     logging.info("Sound Box initialized! Press the button to hear a personalized greeting.")
 
