@@ -2,8 +2,9 @@ FROM arm64v8/python:3.10-slim-buster
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    python3-rpi.gpio \
     python3-pip \
+    python3-gpiozero \
+    raspi-gpio \
     mpg123 \
     && rm -rf /var/lib/apt/lists/*
 

@@ -1,4 +1,13 @@
+# Google Cloud and AI
+google-genai==1.16.1
+
+# Environment and Configuration
+python-dotenv==1.1.0
+
+# HTTP and Networking
 requests==2.32.3
+
+# Raspberry Pi Hardware
+gpiozero==2.0.1
+lgpio==0.2.2.0
 RPi.GPIO==0.7.1
-gtts==2.2.4
-python-dotenv==1.0.0
