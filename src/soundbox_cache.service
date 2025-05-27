@@ -1,0 +1,18 @@
+[Unit]
+Description=Soundbox Greeting Cache Service
+After=network.target
+
+[Service]
+Type=oneshot
+User=YOUR_USERNAME
+WorkingDirectory=/home/YOUR_USERNAME/soundbox
+ExecStart=/home/YOUR_USERNAME/soundbox/venv/bin/python cache.py
+Environment=PYTHONUNBUFFERED=1
+
+[Timer]
+OnCalendar=hourly
+AccuracySec=1m
+Persistent=true
+
+[Install]
+WantedBy=default.target

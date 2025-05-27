@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-import datetime
 import time
 import logging
+import os
 
 from gpiozero import (
     Button,
@@ -10,8 +10,12 @@ from gpiozero import (
 )
 from signal import pause
 
-from text_to_speech import say_this_text
-from weather import get_todays_weather
+from greeting import generate_greeting_text
+from text_to_speech import (
+    generate_filepath,
+    play_audio_file,
+    say_this_text,
+)
 
 
 button = Button(12, pull_up=True)                   # blue wire
@@ -32,39 +36,18 @@ def button_leds_pink():
     button_led_blue.value = 0.3    # 30% blue
 
 
-def get_time_of_day():
-    """Returns 'morning', 'afternoon', or 'evening' based on the current hour.
-    
-    Morning: 5:00 AM - 11:59 AM
-    Afternoon: 12:00 PM - 4:59 PM
-    Evening: 5:00 PM - 4:59 AM
-    """
-    current_hour = datetime.datetime.now().hour
-    
-    if 5 <= current_hour < 12:
-        return "morning"
-    elif 12 <= current_hour < 17:
-        return "afternoon"
-    else:
-        return "evening"
-
-
 def button_push():
     logging.info("Maeve pushed the button")
     button_leds_pink()
-    time_of_day = get_time_of_day()
-    today = datetime.datetime.now()
-    weekday = today.strftime("%A")
-    todays_weather = get_todays_weather()
-    say_this_text(
-        f"""
-        Good {time_of_day} Maeve! Today is {weekday} and the weather 
-        is {todays_weather['condition']['text']} and the temperature is 
-        {int(todays_weather['feelslike_f'])} degrees Fahrenheit. We love you 
-        so much Maevey! We are proud of you. You are so cute and talented, 
-        and you are perfect just the way you are! Love, Mommy and Daddy.
-        """
-    )
+
+    # Check for cached message
+    audio_file_path = generate_filepath()
+    if os.path.exists(audio_file_path):
+        logging.info("Using cached message")
+        play_audio_file(audio_file_path)
+        return
+
+    say_this_text(generate_greeting_text())
 
 
 def button_release():
