@@ -47,14 +47,11 @@ This program:
    1. Start the service: `systemctl --user start soundbox.service`
    1. Check the service status: `systemctl --user status soundbox.service`
    1. View logs: `journalctl --user -u soundbox.service -f`
-1. Setup the systemd file for the caching service:
-   1. Move `soundbox_cache.service` to `~/.config/systemd/user/`: `mv soundbox_cache.service ~/.config/systemd/user/`
+1. Add crontab configuration for the caching service:
+   1. Open crontab: `crontab -e`
+   1. Enter the following line: `0 * * * * cd /home/YOUR_USERNAME/soundbox && /home/YOUR_USERNAME/soundbox/venv/bin/python cache.py >> /home/YOUR_USERNAME/soundbox/cache.log 2>&1`
    1. Replace `YOUR_USERNAME` with your linux username
-   1. Reload the systemd daemon: `systemctl --user daemon-reload`
-   1. Enable the service (to start on boot): `systemctl --user enable soundbox_cache.service`
-   1. Start the service: `systemctl --user start soundbox_cache.service`
-   1. Check the service status: `systemctl --user status soundbox_cache.service`
-   1. View logs: `journalctl --user -u soundbox_cache.service -f`
+   1. Exit and save
 
 ## Running with Docker (experimental)
 
