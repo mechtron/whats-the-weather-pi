@@ -15,6 +15,7 @@ from text_to_speech import (
 
 
 def cache_this_hours_greeting():
+    logging.info("Caching this hours greeting..")
     filepath = generate_filepath()
     message = generate_greeting_text()
     generate(message, filepath)
@@ -22,6 +23,7 @@ def cache_this_hours_greeting():
 
 def clean_up_old_messages():
     """Delete greeting files older than 24 hours from /tmp directory."""
+    logging.info("Cleaning up old messages..")
     tmp_dir = Path("/tmp")
     current_time = time.time()
     max_age = 24 * 60 * 60  # 24 hours in seconds

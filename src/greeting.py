@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 from weather import get_todays_weather
 
@@ -21,6 +22,7 @@ def get_time_of_day():
 
 
 def generate_greeting_text():
+    logging.info("Generating greeting text..")
     time_of_day = get_time_of_day()
     today = datetime.datetime.now()
     weekday = today.strftime("%A")
