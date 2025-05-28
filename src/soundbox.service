@@ -3,8 +3,9 @@ Description=Soundbox Script
 After=network.target
 
 [Service]
-ExecStart=/home/YOUR_USERNAME/soundbox/venv/bin/python /home/YOUR_USERNAME/soundbox/pi.py
 WorkingDirectory=/home/YOUR_USERNAME/soundbox
+Environment="PYTHONUNBUFFERED=1"
+ExecStart=/home/YOUR_USERNAME/soundbox/venv/bin/python /home/YOUR_USERNAME/soundbox/pi.py
 Restart=on-failure
 StandardOutput=journal
 StandardError=journal
