@@ -21,7 +21,7 @@ def cache_this_hours_greeting():
     generate(message, filepath)
 
 
-def clean_up_old_messages():
+def clean_up_old_greetings():
     """Delete greeting files older than 24 hours from /tmp directory."""
     logging.info("Cleaning up old messages..")
     tmp_dir = Path("/tmp")
@@ -42,7 +42,7 @@ def clean_up_old_messages():
 
 def main():
     cache_this_hours_greeting()
-    clean_up_old_messages()
+    clean_up_old_greetings()
 
 
 if __name__ == "__main__":
