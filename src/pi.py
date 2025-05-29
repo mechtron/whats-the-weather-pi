@@ -37,16 +37,18 @@ def button_leds_pink():
 
 
 def button_push():
-    logging.info("Maeve pushed the button")
+    logging.info("Maeve pushed the button!")
     button_leds_pink()
 
-    # Check for cached message
+    # Check for cached greeting
+    logging.info("Checking for cached greetings..")
     audio_file_path = generate_filepath()
     if os.path.exists(audio_file_path):
-        logging.info("Using cached message")
+        logging.info("Using cached greeting")
         play_audio_file(audio_file_path)
         return
 
+    logging.info("No cached greeting found, generating one on-demand")
     say_this_text(generate_greeting_text())
 
 
