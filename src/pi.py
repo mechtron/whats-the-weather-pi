@@ -18,8 +18,8 @@ from text_to_speech import (
 )
 
 
-button = Button(12, pull_up=True)                   # blue wire
-button_led_red = PWMLED(16, active_high=False)      # purple wire
+button = Button(12, pull_up=True)                   # purple wire
+button_led_red = PWMLED(16, active_high=False)      # blue wire
 button_led_green = PWMLED(20, active_high=False)    # grey wire
 button_led_blue = PWMLED(21, active_high=False)     # white wire
 
