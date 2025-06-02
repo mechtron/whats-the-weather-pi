@@ -1,4 +1,5 @@
 import base64
+import datetime
 import logging
 import mimetypes
 import os
@@ -171,15 +172,25 @@ def generate(text, audio_file_path):
             print(chunk.text)
 
 
-def say_this_text(text):
-    audio_file_path = "/tmp/greeting.wav"
-    generate(text, audio_file_path)
-    
-    # Play the audio file
+def generate_filepath():
+    """
+    Generates a filepath with an epoch timestamp suffix (in hours).
+    The filename will be in the format 'greeting_17167000.wav'.
+    """
+    now_utc = datetime.datetime.now(datetime.timezone.utc)
+    epoch_seconds = int(now_utc.timestamp())
+    epoch_hours = epoch_seconds // 3600 # integer division to get whole hours
+    return f"/tmp/greeting_{epoch_hours}.wav"
+
+
+def play_audio_file(audio_file_path):
     logging.info("Playing audio file..")
     audio_player = get_wav_audio_player()
     os.system(f"{audio_player} {audio_file_path}")
-    
-    # Clean up the temporary file
-    logging.info("Removing audio file..")
-    os.remove(audio_file_path)
+
+
+def say_this_text(text):
+    audio_file_path = generate_filepath()
+    generate(text, audio_file_path)
+    play_audio_file(audio_file_path)
+

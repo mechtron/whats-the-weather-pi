@@ -8,10 +8,7 @@ This program:
 1. Fetches current weather data from WeatherAPI.com
 1. Uses Gemini to convert text-to-speech and play a personalized message for Maevey
 
-## Feature ideas
-1. Cache pre-generated messages
-
-## Hardware requirements:
+## Hardware requirements
 1. [Raspberry Pi Zero 2 WH](https://www.adafruit.com/product/6008)
 1. [Mini External USB Stereo Speaker](https://www.adafruit.com/product/3369)
 1. [Micro USB to USB OTG Cable](https://www.amazon.com/dp/B00N9S9Z0G)
@@ -41,7 +38,7 @@ This program:
 1. Create a Python virtual environment and activate it: `python3 -m venv venv && source venv/bin/activate`
 1. Install Python dependencies: `pip install -r requirements.txt`
 1. Set the speaker volume: run `alsamixer` to setup volume (25% is a good starting spot), hit ESC to exit
-1. Setup the systemd file:
+1. Setup the systemd file for the soundbox service:
    1. Create the systemd user service directory (if it doesn't exist): `mkdir -p ~/.config/systemd/user/`
    1. Move `soundbox.service` to `~/.config/systemd/user/`: `mv soundbox.service ~/.config/systemd/user/`
    1. Replace `YOUR_USERNAME` with your linux username
@@ -50,6 +47,11 @@ This program:
    1. Start the service: `systemctl --user start soundbox.service`
    1. Check the service status: `systemctl --user status soundbox.service`
    1. View logs: `journalctl --user -u soundbox.service -f`
+1. Add crontab configuration for the caching service:
+   1. Open crontab: `crontab -e`
+   1. Enter the following line: `0 * * * * cd /home/YOUR_USERNAME/soundbox && /home/YOUR_USERNAME/soundbox/venv/bin/python cache.py >> /home/YOUR_USERNAME/soundbox/cache.log 2>&1`
+   1. Replace `YOUR_USERNAME` with your linux username
+   1. Exit and save
 
 ## Running with Docker (experimental)
 
