@@ -71,9 +71,8 @@ print("Starting alternating rainbow LED animation. Press Ctrl+C to stop.")
 
 
 def rainbow_on():
+    global RAINBOW_ON
     RAINBOW_ON = True
-    # try:
-        # while True:
     while RAINBOW_ON:
         for i in range(NUM_RAINBOW_STEPS):
             # Calculate hue as a fraction of 360 degrees
@@ -83,22 +82,10 @@ def rainbow_on():
             set_color_hsv(hue, 1.0, 1.0)
             time.sleep(STEP_DELAY)
 
-    # except KeyboardInterrupt:
-    #     print("\nStopping animation and cleaning up GPIO.")
-    # finally:
-    #     # Stop PWM and clean up GPIO resources
-    #     red_pwm.stop()
-    #     green_pwm.stop()
-    #     blue_pwm.stop()
-    #     GPIO.cleanup()
-    #     print("GPIO cleaned up. Exiting.")
-
 
 def rainbow_off():
+    global RAINBOW_ON
     RAINBOW_ON = False
     red_pwm.stop()
     green_pwm.stop()
     blue_pwm.stop()
-
-
-rainbow_on()

@@ -11,7 +11,10 @@ from gpiozero import (
 from signal import pause
 
 from greeting import generate_greeting_text
-from pi_rbg_led import start_rainbow
+from pi_rbg_led import (
+    rainbow_on,
+    rainbow_off,
+)
 from text_to_speech import (
     generate_filepath,
     play_audio_file,
@@ -39,6 +42,7 @@ def button_leds_pink():
 
 def button_push():
     logging.info("Maeve pushed the button!")
+    rainbow_on()
     button_leds_pink()
 
     # Check for cached greeting
@@ -57,6 +61,7 @@ def button_release():
     logging.info("Maeve released the button")
     time.sleep(1)
     button_leds_off()
+    rainbow_off()
 
 
 def setup():
