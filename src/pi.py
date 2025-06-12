@@ -11,6 +11,7 @@ from gpiozero import (
 from signal import pause
 
 from greeting import generate_greeting_text
+from pi_rbg_led import start_rainbow
 from text_to_speech import (
     generate_filepath,
     play_audio_file,
