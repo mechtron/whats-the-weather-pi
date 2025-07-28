@@ -14,6 +14,7 @@ from greeting import generate_greeting_text
 from pi_rbg_led import (
     rainbow_on,
     rainbow_off,
+    cleanup,
 )
 from text_to_speech import (
     generate_filepath,
@@ -21,29 +22,26 @@ from text_to_speech import (
     say_this_text,
 )
 
+button = Button(24, pull_up=True, bounce_time=0.3) # light brown wire
 
-button = Button(12, pull_up=True)                   # purple wire
-button_led_red = PWMLED(16, active_high=False)      # blue wire
-button_led_green = PWMLED(20, active_high=False)    # grey wire
-button_led_blue = PWMLED(21, active_high=False)     # white wire
-
-
-def button_leds_off():
-    button_led_red.off()
-    button_led_green.off()
-    button_led_blue.off()
-
-
-def button_leds_pink():
-    button_led_red.value = 1.0     # 100% red
-    button_led_green.value = 0.0   # 0% green
-    button_led_blue.value = 0.3    # 30% blue
+# Manual debounce variables
+last_button_press = 0
+DEBOUNCE_DELAY = 5.0  # 5 second minimum between button presses
 
 
 def button_push():
+    global last_button_press
+    
+    # Manual debounce check
+    current_time = time.time()
+    if current_time - last_button_press < DEBOUNCE_DELAY:
+        logging.info("Button press ignored due to debounce")
+        return
+    
+    last_button_press = current_time
+    
     logging.info("Maeve pushed the button!")
     rainbow_on()
-    button_leds_pink()
 
     # Check for cached greeting
     logging.info("Checking for cached greetings..")
@@ -51,24 +49,17 @@ def button_push():
     if os.path.exists(audio_file_path):
         logging.info("Using cached greeting")
         play_audio_file(audio_file_path)
+        rainbow_off()
         return
 
     logging.info("No cached greeting found, generating one on-demand")
     say_this_text(generate_greeting_text())
-
-
-def button_release():
-    logging.info("Maeve released the button")
-    time.sleep(1)
-    button_leds_off()
     rainbow_off()
 
 
 def setup():
     logging.basicConfig(level=logging.INFO)
     button.when_pressed = button_push
-    button.when_released = button_release
-    button_leds_off()
     logging.info("Sound Box initialized! Press the button to hear a personalized greeting.")
 
 
@@ -80,8 +71,8 @@ def main():
     except KeyboardInterrupt:
         print("\nExiting program")
     finally:
-        # GPIO.cleanup()  # Clean up GPIO on exit
-        pass
+        button.close()
+        cleanup()
 
 
 if __name__ == "__main__":
