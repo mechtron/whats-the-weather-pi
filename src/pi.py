@@ -22,7 +22,7 @@ from text_to_speech import (
     say_this_text,
 )
 
-button = Button(24, pull_up=True, bounce_time=0.2) # light brown wire
+button = Button(21, pull_up=True, bounce_time=0.2) # light brown wire
 
 # Manual debounce variables
 last_button_press = time.time()
