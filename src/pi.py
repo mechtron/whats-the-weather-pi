@@ -22,24 +22,11 @@ from text_to_speech import (
     say_this_text,
 )
 
+
 button = Button(24, pull_up=True, bounce_time=0.3) # light brown wire
 
-# Manual debounce variables
-last_button_press = 0
-DEBOUNCE_DELAY = 5.0  # 5 second minimum between button presses
 
-
-def button_push():
-    global last_button_press
-    
-    # Manual debounce check
-    current_time = time.time()
-    if current_time - last_button_press < DEBOUNCE_DELAY:
-        logging.info("Button press ignored due to debounce")
-        return
-    
-    last_button_press = current_time
-    
+def button_push():    
     logging.info("Maeve pushed the button!")
     rainbow_on()
 
