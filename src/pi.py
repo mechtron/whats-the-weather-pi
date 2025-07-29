@@ -22,10 +22,10 @@ from text_to_speech import (
     say_this_text,
 )
 
-button = Button(24, pull_up=True) # light brown wire
+button = Button(24, pull_up=True, bounce_time=0.2) # light brown wire
 
 # Manual debounce variables
-last_button_press = 0
+last_button_press = time.time()
 DEBOUNCE_DELAY = 5.0  # 5 second minimum between button presses
 
 
