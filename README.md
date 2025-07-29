@@ -12,21 +12,26 @@ This program:
 1. [Raspberry Pi Zero 2 WH](https://www.adafruit.com/product/6008)
 1. [Mini External USB Stereo Speaker](https://www.adafruit.com/product/3369)
 1. [Micro USB to USB OTG Cable](https://www.amazon.com/dp/B00N9S9Z0G)
-1. [Rugged Metal Pushbutton - 16mm 6V RGB Momentary](https://www.adafruit.com/product/3350)
-    - [Datasheet](https://cdn-shop.adafruit.com/product-files/3350/Datasheet+.pdf)
 1. [5V 2.5A Switching Power Supply with 20AWG MicroUSB Cable](https://www.adafruit.com/product/1995)
+1. [Arcade Button - 30mm](https://www.adafruit.com/product/471)
+1. [Diffused RGB 10mm LED - Common Anode](https://www.adafruit.com/product/848)
+    - [Datasheet](https://cdn-shop.adafruit.com/product-files/848/848_Datasheet.pdf)
+1. [1N4148 Signal Diode](https://www.adafruit.com/product/1641)
+    - [Datasheet](https://cdn-shop.adafruit.com/datasheets/1N4148.pdf)
+1. 3 x 560 ohm 5% resistors
 
 ## Running on Raspberry Pi
 
 ### Hardware setup
 
 1. Use Raspberry Pi Imager to flash your Pi's SD card with Raspberry Pi OS
-1. Wire up the RGB pushbutton switch to your Pi
+1. Wire up the pushbutton switch to your Pi
+   Pin: GPIO 21
+1. Wire up the RGB LED to your Pi
    Pins:
-      - Button input: GPIO 12
-      - Red LED: GPIO 16
-      - Green LED: GPIO 20
-      - Blue LED: GPIO 21
+      - Red LED: GPIO 13. In between the LED red cathode and PWM pin, place a 560 ohm resistor and the 1N4148 diode in series.
+      - Green LED: GPIO 19. In between the LED green cathode and PWM pine, place a 560 ohm resistor.
+      - Blue LED: GPIO 26. In between the LED blue cathode and PWM pine, place a 560 ohm resistor.
 1. Plug the speaker into your Pi using the USB to USB OTG cable
 
 ### Software setup
