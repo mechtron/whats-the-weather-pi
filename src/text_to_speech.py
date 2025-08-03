@@ -143,7 +143,7 @@ def generate(text, audio_file_path):
         speech_config=types.SpeechConfig(
             voice_config=types.VoiceConfig(
                 prebuilt_voice_config=types.PrebuiltVoiceConfig(
-                    voice_name="Orus"
+                    voice_name="Kore"
                 )
             )
         ),
