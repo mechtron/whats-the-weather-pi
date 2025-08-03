@@ -3,6 +3,7 @@ import logging
 import time
 import os
 from pathlib import Path
+import pytz
 
 from dotenv import load_dotenv
 import requests
@@ -18,13 +19,16 @@ LOCATION = "LAGUNA_HILLS"   # Replace with your city name or postal code
 
 
 def get_time_of_day():
-    """Returns 'morning', 'afternoon', or 'evening' based on the current hour.
+    """Returns 'morning', 'afternoon', or 'evening' based on the current hour in PST.
     
     Morning: 5:00 AM - 11:59 AM
     Afternoon: 12:00 PM - 4:59 PM
     Evening: 5:00 PM - 4:59 AM
     """
-    current_hour = datetime.datetime.now().hour
+    # Get current time in PST
+    pst = pytz.timezone('US/Pacific')
+    current_time = datetime.datetime.now(pst)
+    current_hour = current_time.hour
     
     if 5 <= current_hour < 12:
         return "morning"
