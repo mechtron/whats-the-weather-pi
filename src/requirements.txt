@@ -3,6 +3,7 @@ google-genai==1.16.1
 
 # Environment and Configuration
 python-dotenv==1.1.0
+pytz==2025.2
 
 # HTTP and Networking
 requests==2.32.3

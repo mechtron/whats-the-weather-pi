@@ -7,6 +7,7 @@ from pathlib import Path
 import platform
 import re
 import struct
+import pytz
 
 from dotenv import load_dotenv
 from google import genai
@@ -177,8 +178,9 @@ def generate_filepath():
     Generates a filepath with an epoch timestamp suffix (in hours).
     The filename will be in the format 'greeting_17167000.wav'.
     """
-    now_utc = datetime.datetime.now(datetime.timezone.utc)
-    epoch_seconds = int(now_utc.timestamp())
+    pst = pytz.timezone('US/Pacific')
+    now_pst = datetime.datetime.now(pst)
+    epoch_seconds = int(now_pst.timestamp())
     epoch_hours = epoch_seconds // 3600 # integer division to get whole hours
     return f"/tmp/greeting_{epoch_hours}.wav"
 

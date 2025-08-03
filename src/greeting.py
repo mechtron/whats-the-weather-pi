@@ -1,17 +1,20 @@
 import datetime
 import logging
+import pytz
 
 from weather import get_todays_weather
 
 
 def get_time_of_day():
-    """Returns 'morning', 'afternoon', or 'evening' based on the current hour.
+    """Returns 'morning', 'afternoon', or 'evening' based on the current hour in PST.
     
     Morning: 5:00 AM - 11:59 AM
     Afternoon: 12:00 PM - 4:59 PM
     Evening: 5:00 PM - 4:59 AM
     """
-    current_hour = datetime.datetime.now().hour
+    pst = pytz.timezone('US/Pacific')
+    current_time = datetime.datetime.now(pst)
+    current_hour = current_time.hour
     
     if 5 <= current_hour < 12:
         return "morning"
@@ -24,7 +27,8 @@ def get_time_of_day():
 def generate_greeting_text():
     logging.info("Generating greeting text..")
     time_of_day = get_time_of_day()
-    today = datetime.datetime.now()
+    pst = pytz.timezone('US/Pacific')
+    today = datetime.datetime.now(pst)
     weekday = today.strftime("%A")
     todays_weather = get_todays_weather()
     return f"""

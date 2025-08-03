@@ -99,9 +99,6 @@ def set_color_hsv(hue, saturation, value):
     blue_pwm.ChangeDutyCycle(blue_duty_cycle)
 
 
-# print("Starting alternating rainbow LED animation. Press Ctrl+C to stop.")
-
-
 def rainbow_on():
     logging.info("Starting rainbow LED animation")
     global RAINBOW_ON, rainbow_thread, should_set_colors, thread_stop_requested
