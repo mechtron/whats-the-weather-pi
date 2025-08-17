@@ -3,6 +3,7 @@
 import time
 import logging
 import os
+import threading
 
 from gpiozero import (
     Button,
@@ -48,6 +49,7 @@ def button_push():
         play_audio_file(audio_file_path)
         rainbow_off()
         is_playing_audio = False
+        last_button_press = time.time()
         return
 
     logging.info("No cached greeting found, generating one on-demand")
@@ -57,9 +59,15 @@ def button_push():
     is_playing_audio = False
 
 
+def button_handler():
+    """Wrapper function to run button_push in a separate thread"""
+    thread = threading.Thread(target=button_push, daemon=True)
+    thread.start()
+
+
 def setup():
     logging.basicConfig(level=logging.INFO)
-    button.when_pressed = button_push
+    button.when_pressed = button_handler
     logging.info("Sound Box initialized! Press the button to hear a personalized greeting.")
 
 
