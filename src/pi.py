@@ -24,21 +24,17 @@ from text_to_speech import (
 
 button = Button(21, pull_up=True, bounce_time=0.2) # light brown wire
 
-# Manual debounce variables
-last_button_press = time.time()
-DEBOUNCE_DELAY = 5.0  # 5 second minimum between button presses
+# State-based button control
+is_playing_audio = False
 
 
 def button_push():
-    global last_button_press
+    global is_playing_audio
     
-    # Manual debounce check
-    current_time = time.time()
-    if current_time - last_button_press < DEBOUNCE_DELAY:
-        logging.info("Button press ignored due to debounce")
+    # Prevent new button presses if audio is currently playing
+    if is_playing_audio:
+        logging.info("Button press ignored - audio is currently playing")
         return
-    
-    last_button_press = current_time
     
     logging.info("Maeve pushed the button!")
     rainbow_on()
@@ -48,13 +44,17 @@ def button_push():
     audio_file_path = generate_filepath()
     if os.path.exists(audio_file_path):
         logging.info("Using cached greeting")
+        is_playing_audio = True
         play_audio_file(audio_file_path)
         rainbow_off()
+        is_playing_audio = False
         return
 
     logging.info("No cached greeting found, generating one on-demand")
+    is_playing_audio = True
     say_this_text(generate_greeting_text())
     rainbow_off()
+    is_playing_audio = False
 
 
 def setup():
