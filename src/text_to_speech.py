@@ -121,56 +121,59 @@ def convert_to_wav(audio_data: bytes, mime_type: str) -> bytes:
 
 
 def generate(text, audio_file_path):
-    logging.info("Generating text to speech using Gemini..")
-    client = genai.Client(
-        api_key=os.environ.get("GEMINI_API_KEY"),
-    )
+    try:
+        logging.info("Generating text to speech using Gemini..")
+        client = genai.Client(
+            api_key=os.environ.get("GEMINI_API_KEY"),
+        )
 
-    model = "gemini-2.5-flash-preview-tts"
-    contents = [
-        types.Content(
-            role="user",
-            parts=[
-                types.Part.from_text(text=text),
+        model = "gemini-2.5-flash-preview-tts"
+        contents = [
+            types.Content(
+                role="user",
+                parts=[
+                    types.Part.from_text(text=text),
+                ],
+            ),
+        ]
+        generate_content_config = types.GenerateContentConfig(
+            temperature=1.3,
+            response_modalities=[
+                "audio",
             ],
-        ),
-    ]
-    generate_content_config = types.GenerateContentConfig(
-        temperature=1.3,
-        response_modalities=[
-            "audio",
-        ],
-        speech_config=types.SpeechConfig(
-            voice_config=types.VoiceConfig(
-                prebuilt_voice_config=types.PrebuiltVoiceConfig(
-                    voice_name="Kore"
+            speech_config=types.SpeechConfig(
+                voice_config=types.VoiceConfig(
+                    prebuilt_voice_config=types.PrebuiltVoiceConfig(
+                        voice_name="Kore"
+                    )
                 )
-            )
-        ),
-    )
+            ),
+        )
 
-    for chunk in client.models.generate_content_stream(
-        model=model,
-        contents=contents,
-        config=generate_content_config,
-    ):
-        if (
-            chunk.candidates is None
-            or chunk.candidates[0].content is None
-            or chunk.candidates[0].content.parts is None
+        for chunk in client.models.generate_content_stream(
+            model=model,
+            contents=contents,
+            config=generate_content_config,
         ):
-            continue
-        if chunk.candidates[0].content.parts[0].inline_data:
-            file_name = audio_file_path
-            inline_data = chunk.candidates[0].content.parts[0].inline_data
-            data_buffer = inline_data.data
-            file_extension = mimetypes.guess_extension(inline_data.mime_type)
-            if file_extension is None:
-                file_extension = ".wav"
-                data_buffer = convert_to_wav(inline_data.data, inline_data.mime_type)
-            save_binary_file(audio_file_path, data_buffer)
-        else:
-            print(chunk.text)
+            if (
+                chunk.candidates is None
+                or chunk.candidates[0].content is None
+                or chunk.candidates[0].content.parts is None
+            ):
+                continue
+            if chunk.candidates[0].content.parts[0].inline_data:
+                file_name = audio_file_path
+                inline_data = chunk.candidates[0].content.parts[0].inline_data
+                data_buffer = inline_data.data
+                file_extension = mimetypes.guess_extension(inline_data.mime_type)
+                if file_extension is None:
+                    file_extension = ".wav"
+                    data_buffer = convert_to_wav(inline_data.data, inline_data.mime_type)
+                save_binary_file(audio_file_path, data_buffer)
+            else:
+                print(chunk.text)
+    except Exception as e:
+        logging.error(f"Error generating text to speech: {e}")
 
 
 def generate_filepath():
