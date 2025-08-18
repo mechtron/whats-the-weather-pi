@@ -49,7 +49,6 @@ def button_push():
         play_audio_file(audio_file_path)
         rainbow_off()
         is_playing_audio = False
-        last_button_press = time.time()
         return
 
     logging.info("No cached greeting found, generating one on-demand")
