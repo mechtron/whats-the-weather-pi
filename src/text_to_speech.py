@@ -189,13 +189,19 @@ def generate_filepath():
 
 
 def play_audio_file(audio_file_path):
-    logging.info("Playing audio file..")
-    audio_player = get_wav_audio_player()
-    os.system(f"{audio_player} {audio_file_path}")
+    try:
+        logging.info("Playing audio file..")
+        audio_player = get_wav_audio_player()
+        os.system(f"{audio_player} {audio_file_path}")
+    except Exception as e:
+        logging.error(f"Error playing audio file: {e}")
 
 
 def say_this_text(text):
-    audio_file_path = generate_filepath()
-    generate(text, audio_file_path)
-    play_audio_file(audio_file_path)
-
+    try:
+        logging.info("Generating and playing audio file..")
+        audio_file_path = generate_filepath()
+        generate(text, audio_file_path)
+        play_audio_file(audio_file_path)
+    except Exception as e:
+        logging.error(f"Error saying text: {e}")

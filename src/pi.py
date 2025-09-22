@@ -40,22 +40,23 @@ def button_push():
     logging.info("Maeve pushed the button!")
     rainbow_on()
 
-    # Check for cached greeting
-    logging.info("Checking for cached greetings..")
-    audio_file_path = generate_filepath()
-    if os.path.exists(audio_file_path):
-        logging.info("Using cached greeting")
-        is_playing_audio = True
-        play_audio_file(audio_file_path)
+    try:
+        # Check for cached greeting
+        logging.info("Checking for cached greetings..")
+        audio_file_path = generate_filepath()
+        if os.path.exists(audio_file_path):
+            logging.info("Using cached greeting")
+            is_playing_audio = True
+            play_audio_file(audio_file_path)
+        else:
+            logging.info("No cached greeting found, generating one on-demand")
+            is_playing_audio = True
+            say_this_text(generate_greeting_text())
+    except Exception as e:
+        logging.error(f"Error during audio playback: {e}")
+    finally:
         rainbow_off()
         is_playing_audio = False
-        return
-
-    logging.info("No cached greeting found, generating one on-demand")
-    is_playing_audio = True
-    say_this_text(generate_greeting_text())
-    rainbow_off()
-    is_playing_audio = False
 
 
 def button_handler():
