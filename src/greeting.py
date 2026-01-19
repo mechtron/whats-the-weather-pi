@@ -2,7 +2,7 @@ import datetime
 import logging
 import pytz
 
-from weather import get_todays_weather
+from weather import get_todays_weather, get_clothing_recommendation
 
 
 def get_time_of_day():
@@ -31,10 +31,15 @@ def generate_greeting_text():
     today = datetime.datetime.now(pst)
     weekday = today.strftime("%A")
     todays_weather = get_todays_weather()
+    clothing_rec = get_clothing_recommendation(todays_weather)
+    
+    if todays_weather == "unavailable":
+        weather_text = "the weather is unknown"
+    else:
+        weather_text = f"the weather is {todays_weather['current']['condition']['text']} and the temperature is {int(todays_weather['current']['feelslike_f'])} degrees Fahrenheit"
+    
     return f"""
-    Good {time_of_day} Maeve! Today is {weekday} and the weather 
-    is {todays_weather['current']['condition']['text']} and the temperature is 
-    {int(todays_weather['current']['feelslike_f'])} degrees Fahrenheit. We love you 
-    so much Maevey! We are proud of you. You are so cute and talented, 
+    Good {time_of_day} Maeve! Today is {weekday} and {weather_text}. {clothing_rec} 
+    We love you so much Maevey! We are proud of you. You are so cute and talented, 
     and you are perfect just the way you are! Love, Mommy and Daddy.
     """
