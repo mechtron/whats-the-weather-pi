@@ -45,7 +45,7 @@ def get_todays_weather():
         url = f"http://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={LOCATION}"
         response = requests.get(url)
         data = response.json()
-        return data['current']
+        return data
     except Exception as e:
         print(f"Error fetching weather data: {e}")
         return "unavailable"  # Fallback if weather data can't be retrieved
