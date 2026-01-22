@@ -7,6 +7,7 @@ This program:
 1. Gets the current day of the week
 1. Fetches current weather data from WeatherAPI.com
 1. Uses Gemini to convert text-to-speech and play a personalized message for Maevey - now including clothing recommendations!
+1. **Special evening feature**: When the button is pressed between 6-9pm PST, provides _tomorrow's_ weather forecast and clothing recommendations
 
 ## Hardware requirements
 1. [Raspberry Pi Zero 2 WH](https://www.adafruit.com/product/6008)
