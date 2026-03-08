@@ -32,7 +32,7 @@ def get_time_of_day():
     
     if 5 <= current_hour < 12:
         return "morning"
-    elif 12 <= current_hour < 17:
+    elif 12 <= current_hour < 14:
         return "afternoon"
     else:
         return "evening"
