@@ -2,6 +2,7 @@ import datetime
 import logging
 import pytz
 
+from config import CHILD_NAME, CLOSING_MESSAGE
 from weather import (
     get_todays_weather,
     get_clothing_recommendation,
@@ -72,7 +73,6 @@ def generate_greeting_text():
             weather_text = f"the weather is {todays_weather['current']['condition']['text']} and the temperature is {int(todays_weather['current']['feelslike_f'])} degrees Fahrenheit"
     
     return f"""
-    Good {time_of_day} Maeve! {greeting_day_text} and {weather_text}. {clothing_rec} 
-    We love you so much Maevey! We are proud of you. You are so cute and talented, 
-    and you are perfect just the way you are! Love, Mommy and Daddy.
+    Good {time_of_day} {CHILD_NAME}! {greeting_day_text} and {weather_text}. {clothing_rec}
+    {CLOSING_MESSAGE}
     """

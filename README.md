@@ -1,13 +1,15 @@
 # whats-the-weather-pi
 
-Maeve's Sound Box - a special sound box for a special 4-year-old that announces the day and weather when a button is pressed.
+Personalized sound boxes for kids — each Raspberry Pi announces the day and weather when a button is pressed, with a custom voice and message per child.
 
 This program:
 1. Monitors a GPIO button press
 1. Gets the current day of the week
 1. Fetches current weather data from WeatherAPI.com
-1. Uses Gemini to convert text-to-speech and play a personalized message for Maevey - now including clothing recommendations!
+1. Uses Gemini to convert text-to-speech and play a personalized message — including clothing recommendations
 1. **Special evening feature**: When the button is pressed between 6-9pm PST, provides _tomorrow's_ weather forecast and clothing recommendations
+
+Each sound box is configured via a `.env` file on that Pi (name, voice, closing message, and API keys). See [Per-sound-box configuration](#per-sound-box-configuration) below.
 
 ## Hardware requirements
 1. [Raspberry Pi Zero 2 WH](https://www.adafruit.com/product/6008)
@@ -20,6 +22,29 @@ This program:
 1. [1N4148 Signal Diode](https://www.adafruit.com/product/1641)
     - [Datasheet](https://cdn-shop.adafruit.com/datasheets/1N4148.pdf)
 1. 3 x 560 ohm 5% resistors
+
+## Per-sound-box configuration
+
+Each Pi gets its own `.env` file in `~/soundbox/`. Copy a profile and add your API keys:
+
+```bash
+# Maeve's Pi
+cp profiles/maeve.env ~/soundbox/.env
+
+# Griffin's Pi
+cp profiles/griffin.env ~/soundbox/.env
+```
+
+| Variable | Description |
+|----------|-------------|
+| `CHILD_NAME` | Name spoken in the greeting (e.g. `Good morning Alex!`) |
+| `VOICE_NAME` | Gemini TTS voice (`Kore`, `Puck`, `Charon`, `Fenrir`, `Aoede`, etc.) |
+| `CLOSING_MESSAGE` | Personalized message after the weather and clothing advice |
+| `LOCATION` | City or postal code for WeatherAPI.com |
+| `GEMINI_API_KEY` | Google Gemini API key |
+| `WEATHER_API_KEY` | WeatherAPI.com API key |
+
+Maeve's Pi uses `VOICE_NAME=Kore`; Griffin's uses `Puck` so the two boxes sound distinct.
 
 ## Running on Raspberry Pi
 
@@ -39,8 +64,8 @@ This program:
 
 1. SSH into your Raspberry Pi: `ssh username@soundbox.local`, where `username` is the user you inputted during setup and `soundbox.local` is your Pi's hostname/IP.
 1. Create a new folder `~/soundbox`: `mkdir ~/soundbox` and change directories to it: `cd ~/soundbox`
-1. Copy the contents of `./src` to your Raspberry Pi: `scp *.* .env username@soundbox.local:/home/username/soundbox`
-1. Rename `.env.example` to `.env` and add your Gemini and WeatherAPI.com API keys: `mv .env.example .env`
+1. Copy the contents of `./src` to your Raspberry Pi: `scp -r src/* profiles username@soundbox.local:/home/username/soundbox`
+1. Copy a profile to `.env` and add your API keys: `cp profiles/maeve.env .env` (or `profiles/griffin.env` for Griffin's box)
 1. Create a Python virtual environment and activate it: `python3 -m venv venv && source venv/bin/activate`
 1. Install Python dependencies: `pip install -r requirements.txt`
 1. Set the speaker volume: run `alsamixer` to setup volume (25% is a good starting spot), hit ESC to exit
@@ -63,7 +88,7 @@ This program:
 
 1. Copy the example environment file:
    ```bash
-   cp src/.env.example src/.env
+   cp src/env.example src/.env
    ```
 
 2. Edit `src/.env` and add your Gemini and WeatherAPI.com API keys

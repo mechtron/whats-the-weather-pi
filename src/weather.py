@@ -1,21 +1,13 @@
 import datetime
 import logging
 import time
-import os
-from pathlib import Path
 import pytz
 
-from dotenv import load_dotenv
 import requests
 
+from config import LOCATION, WEATHER_API_KEY, validate_api_keys
 
-file_dir = Path(__file__).parent
-load_dotenv(file_dir / '.env')
-
-WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
-if not WEATHER_API_KEY:
-    raise ValueError("WEATHER_API_KEY environment variable is not set")
-LOCATION = "LAGUNA_HILLS"   # Replace with your city name or postal code
+validate_api_keys()
 
 
 def get_time_of_day():
