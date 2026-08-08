@@ -9,17 +9,12 @@ import re
 import struct
 import pytz
 
-from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
+from config import GEMINI_API_KEY, VOICE_NAME, validate_api_keys
 
-file_dir = Path(__file__).parent
-load_dotenv(file_dir / '.env')
-
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-if not GOOGLE_API_KEY:
-    raise ValueError("GOOGLE_API_KEY environment variable is not set")
+validate_api_keys()
 
 
 def get_wav_audio_player():
@@ -123,9 +118,7 @@ def convert_to_wav(audio_data: bytes, mime_type: str) -> bytes:
 def generate(text, audio_file_path):
     try:
         logging.info("Generating text to speech using Gemini..")
-        client = genai.Client(
-            api_key=os.environ.get("GEMINI_API_KEY"),
-        )
+        client = genai.Client(api_key=GEMINI_API_KEY)
 
         model = "gemini-2.5-flash-preview-tts"
         contents = [
@@ -144,7 +137,7 @@ def generate(text, audio_file_path):
             speech_config=types.SpeechConfig(
                 voice_config=types.VoiceConfig(
                     prebuilt_voice_config=types.PrebuiltVoiceConfig(
-                        voice_name="Kore"
+                        voice_name=VOICE_NAME
                     )
                 )
             ),

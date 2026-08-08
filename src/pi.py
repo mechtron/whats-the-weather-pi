@@ -11,6 +11,7 @@ from gpiozero import (
 )
 from signal import pause
 
+from config import CHILD_NAME
 from greeting import generate_greeting_text
 from pi_rbg_led import (
     rainbow_on,
@@ -37,7 +38,7 @@ def button_push():
         logging.info("Button press ignored - audio is currently playing")
         return
     
-    logging.info("Maeve pushed the button!")
+    logging.info("%s pushed the button!", CHILD_NAME)
     rainbow_on()
 
     try:
