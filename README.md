@@ -44,7 +44,7 @@ cp profiles/griffin.env ~/soundbox/.env
 | `GEMINI_API_KEY` | Google Gemini API key |
 | `WEATHER_API_KEY` | WeatherAPI.com API key |
 
-Maeve's Pi uses `VOICE_NAME=Kore`; Griffin's uses `Puck` so the two boxes sound distinct.
+Maeve's Pi uses `VOICE_NAME=Kore`; Griffin's uses `Achird` so the two boxes sound distinct.
 
 ## Running on Raspberry Pi
 
