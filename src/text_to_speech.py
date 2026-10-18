@@ -185,6 +185,7 @@ def play_audio_file(audio_file_path):
     try:
         logging.info("Playing audio file..")
         audio_player = get_wav_audio_player()
+        logging.info(f"Playing audio command: {audio_player} {audio_file_path}")
         os.system(f"{audio_player} {audio_file_path}")
     except Exception as e:
         logging.error(f"Error playing audio file: {e}")
