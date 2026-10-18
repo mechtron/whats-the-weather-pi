@@ -68,6 +68,7 @@ Maeve's Pi uses `VOICE_NAME=Kore`; Griffin's uses `Achird` so the two boxes soun
 1. Copy a profile to `.env` and add your API keys: `cp profiles/maeve.env .env` (or `profiles/griffin.env` for Griffin's box)
 1. Create a Python virtual environment and activate it: `python3 -m venv venv && source venv/bin/activate`
 1. Install Python dependencies: `pip install -r requirements.txt`
+1. Copy `asound.conf` to `/etc/asound.conf` (or `~/.asoundrc` for just your user)
 1. Set the speaker volume: run `alsamixer` to setup volume (25% is a good starting spot), hit ESC to exit
 1. Setup the systemd file for the soundbox service:
    1. Create the systemd user service directory (if it doesn't exist): `mkdir -p ~/.config/systemd/user/`
